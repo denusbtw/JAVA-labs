@@ -1,6 +1,11 @@
 package Lab1;
 
 public class Main {
+    /**
+    * This method outputs in console all Fibonacci elements that meet this requirement: element = w^2 - 1,
+     * where w^2 is element of Fibonacci sequence
+     * @param args command-line arguments
+    * */
     public static void main(String[] args) {
         // Check only one argument was passed
         if (args.length > 1) {
@@ -34,8 +39,13 @@ public class Main {
 
     }
 
+    /**
+     * This class contains info about Fibonacci sequence element
+     * **/
     static class Fibonacci {
+        // Number
         public long value;
+        // sequence number of value in Fibonacci sequence
         public int sequenceNumber;
 
         public Fibonacci(long value, int sequenceNumber) {
@@ -60,6 +70,11 @@ public class Main {
         }
     }
 
+    /**
+     * This function computes elements of Fibonacci sequence and stores them in array
+     * @param n maximum number of elements of Fibonacci sequence
+     * @return array of Fibonacci elements
+     * **/
     static Fibonacci[] fib(int n) {
         long x1 = 1, x2 = 1;
 
