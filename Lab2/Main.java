@@ -1,10 +1,15 @@
 package Lab2;
-import java.util.*;
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Arrays;
 
 public class Main {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RED = "\u001B[31m";
+
 
     public static void main(String[] args) {
         menu();
@@ -39,7 +44,7 @@ public class Main {
                     sc.close();
                     return;
                 case 1:
-                    fillListWithTestProducts(products);
+                    createTestProducts(products);
 
                     System.out.println("All test products:");
                     printTable(products);
@@ -122,17 +127,17 @@ public class Main {
         }
     }
 
-    static void fillListWithTestProducts(List<Product> products) {
-        products.add(new Product(1, "Milk", "DairyFresh", 2.99, 200, createExpiration("2024-09-30")));
-        products.add(new Product(2, "Bread", "Baker's Delight", 1.99, 150, createExpiration("2024-09-25")));
-        products.add(new Product(3, "Eggs", "FarmBest", 3.50, 300, createExpiration("2024-10-10")));
-        products.add(new Product(4, "Yogurt", "DairyFresh", 4.99, 100, createExpiration("2024-10-05")));
-        products.add(new Product(5, "Cheese", "CheddarMelt", 5.99, 80, createExpiration("2024-12-15")));
-        products.add(new Product(6, "Butter", "CreamySpread", 2.50, 120, createExpiration("2025-01-10")));
-        products.add(new Product(7, "Orange Juice", "CitrusSplash", 3.99, 200, createExpiration("2024-11-20")));
-        products.add(new Product(8, "Frozen Pizza", "QuickBake", 7.50, 90, createExpiration("2025-06-30")));
-        products.add(new Product(9, "Chicken Breast", "PoultryPrime", 9.99, 50, createExpiration("2024-09-22")));
-        products.add(new Product(10, "Ice Cream", "SweetTreats", 6.99, 100, createExpiration("2024-09-22")));
+    static void createTestProducts(List<Product> products) {
+        products.add(new Product(1, "Milk", "DairyFresh", 2.99, 200, "2024-09-30"));
+        products.add(new Product(2, "Bread", "Baker's Delight", 1.99, 150, "2024-09-25"));
+        products.add(new Product(3, "Eggs", "FarmBest", 3.50, 300, "2024-10-10"));
+        products.add(new Product(4, "Yogurt", "DairyFresh", 4.99, 100, "2024-10-05"));
+        products.add(new Product(5, "Cheese", "CheddarMelt", 5.99, 80, "2024-12-15"));
+        products.add(new Product(6, "Butter", "CreamySpread", 2.50, 120, "2025-01-10"));
+        products.add(new Product(7, "Orange Juice", "CitrusSplash", 3.99, 200, "2024-11-20"));
+        products.add(new Product(8, "Frozen Pizza", "QuickBake", 7.50, 90, "2025-06-30"));
+        products.add(new Product(9, "Chicken Breast", "PoultryPrime", 9.99, 50, "2024-09-22"));
+        products.add(new Product(10, "Ice Cream", "SweetTreats", 6.99, 100, "2024-09-22"));
     }
 
     static Product createProduct(){
@@ -172,10 +177,9 @@ public class Main {
         }
 
         System.out.println("Enter product expiration date (yyyy-mm-dd): ");
-        String expirationString = sc.nextLine();
-        Date expiration = createExpiration(expirationString);
+        String expiration = sc.nextLine();
 
-        if (expirationString.equals("-1")){
+        if (expiration.equals("-1")){
             return null;
         }
 
@@ -209,7 +213,7 @@ public class Main {
     static List<Product> filterByExpirationAfter(String expiration, List<Product> products) {
         List<Product> filteredProducts = new ArrayList<>();
 
-        Date expirationDate = createExpiration(expiration);
+        Date expirationDate = Product.createExpirationDate(expiration);
 
         for (Product product: products) {
             if (product.getExpiration().after(expirationDate)) {
@@ -220,45 +224,14 @@ public class Main {
         return filteredProducts;
     }
 
-    static Date createExpiration(String expiration){
-        String[] array = expiration.split("-");
-
-        int year = Integer.parseInt(array[0]);
-
-        if (year <= 0){
-            System.out.println("Invalid year of expiration");
-            return null;
-        }
-
-        int month = Integer.parseInt(array[1]);
-
-        if (month <= 0 || month > 12){
-            System.out.println("Invalid month of expiration");
-            return null;
-        }
-
-        int day = Integer.parseInt(array[2]);
-
-        if (day <= 0 || day > 31){
-            System.out.println("Invalid day of expiration");
-            return null;
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month-1, day, 0, 0, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        return calendar.getTime();
-    }
-
 
     static void printTable(List<Product> products) {
         String[] headers = {"ID", "Name", "Manufacturer", "Price", "Quantity", "Expiration"};
 
-        // Calculate the maximum width for each column
+
         int[] columnWidths = new int[headers.length];
         for (int i = 0; i < headers.length; i++) {
-            columnWidths[i] = headers[i].length();  // Start with header length
+            columnWidths[i] = headers[i].length();
         }
 
         if (products.isEmpty()){
@@ -268,7 +241,7 @@ public class Main {
             return;
         }
 
-        // Update columnWidths based on product data
+
         for (Product product : products) {
             columnWidths[0] = Math.max(columnWidths[0], String.valueOf(product.getId()).length());
             columnWidths[1] = Math.max(columnWidths[1], product.getName().length());
@@ -278,7 +251,7 @@ public class Main {
             columnWidths[5] = Math.max(columnWidths[5], product.getFormattedExpiration().length());
         }
 
-        // Print the table
+
         printSeparator(columnWidths);
         printRow(headers, columnWidths);
         printSeparator(columnWidths);
@@ -297,7 +270,6 @@ public class Main {
         System.out.println();
     }
 
-    // Method to print a row with values center-aligned
     static void printRow(String[] row, int[] columnWidths) {
         System.out.print(ANSI_GREEN + "|" + ANSI_RESET);
         for (int i = 0; i < row.length; i++) {
@@ -307,7 +279,6 @@ public class Main {
         System.out.println();
     }
 
-    // Method to print the separator between rows
     static void printSeparator(int[] columnWidths) {
         System.out.print(ANSI_GREEN);
         System.out.print("+");
@@ -320,7 +291,6 @@ public class Main {
         System.out.println(ANSI_RESET);
     }
 
-    // Helper method to center-align text within a fixed width
     static String centerString(String text, int width) {
         int padding = width - text.length();
         int paddingLeft = padding / 2;

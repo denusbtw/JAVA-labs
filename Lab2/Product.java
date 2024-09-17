@@ -1,5 +1,6 @@
 package Lab2;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -11,13 +12,13 @@ public class Product {
     private Date expiration;
     private int quantity;
 
-    public Product(int id, String name, String manufacturer, double price, int quantity, Date expiration) {
+    public Product(int id, String name, String manufacturer, double price, int quantity, String expiration) {
         this.id = id;
         this.name = name;
         this.manufacturer = manufacturer;
         this.price = price;
         this.quantity = quantity;
-        this.expiration = expiration;
+        this.expiration = createExpirationDate(expiration);
     }
 
     public int getId() {
@@ -66,6 +67,37 @@ public class Product {
 
     public void setExpiration(Date expiration) {
         this.expiration = expiration;
+    }
+
+    static Date createExpirationDate(String expiration){
+        String[] array = expiration.split("-");
+
+        int year = Integer.parseInt(array[0]);
+
+        if (year <= 0){
+            System.out.println("Invalid year of expiration");
+            return null;
+        }
+
+        int month = Integer.parseInt(array[1]);
+
+        if (month <= 0 || month > 12){
+            System.out.println("Invalid month of expiration");
+            return null;
+        }
+
+        int day = Integer.parseInt(array[2]);
+
+        if (day <= 0 || day > 31){
+            System.out.println("Invalid day of expiration");
+            return null;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month-1, day, 0, 0, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
     }
 
     public String toString() {
