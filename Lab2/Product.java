@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 public class Product {
-    private int id;
+    private final int id;
     private String name;
     private String manufacturer;
     private double price;
@@ -45,10 +45,6 @@ public class Product {
         return this.expiration;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -65,8 +61,8 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public void setExpiration(Date expiration) {
-        this.expiration = expiration;
+    public void setExpiration(String expiration) {
+        this.expiration = createExpirationDate(expiration);
     }
 
     static Date createExpirationDate(String expiration){
@@ -116,7 +112,7 @@ public class Product {
     }
 
     public String getFormattedExpiration() {
-        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
         return formater.format(this.expiration);
     }
 }

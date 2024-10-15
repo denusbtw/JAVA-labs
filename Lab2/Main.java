@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Arrays;
 
+
 public class Main {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RED = "\u001B[31m";
-
+    static int currentID = 1;
 
     public static void main(String[] args) {
         menu();
@@ -17,7 +18,7 @@ public class Main {
 
     static void printMenuChoices() {
         System.out.println("\n0. Exit ");
-        System.out.println("1. With test data ");
+        System.out.println("1. Use test products ");
         System.out.println("2. Manually input data ");
         System.out.println("3. Filter products by name ");
         System.out.println("4. Filter products by name and price <= ");
@@ -28,7 +29,7 @@ public class Main {
     static void menu(){
         Scanner sc = new Scanner(System.in);
 
-        List<Product> products = new ArrayList<>();
+        List<Product> products = new ArrayList<Product>();
         List<Product> filteredProducts;
         String name, expiration;
         double price;
@@ -47,7 +48,7 @@ public class Main {
                     createTestProducts(products);
 
                     System.out.println("All test products:");
-                    printTable(products);
+                    printProducts(products);
                     break;
                 case 2:
                     System.out.println("Enter (-1) to stop");
@@ -56,7 +57,7 @@ public class Main {
                         Product product = createProduct();
                         if (product == null){
                             System.out.println("Stopping creating product...");
-                            printTable(products);
+                            printProducts(products);
                             break;
                         }
 
@@ -70,7 +71,7 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("Enter name of product: ");
+                    System.out.println("Enter name of product you want to find: ");
                     name = sc.nextLine();
 
                     filteredProducts = filterByName(name, products);
@@ -80,7 +81,7 @@ public class Main {
                     }
 
                     System.out.printf("Products with name '%s'\n", name);
-                    printTable(filteredProducts);
+                    printProducts(filteredProducts);
                     break;
                 case 4:
                     if (products.isEmpty()){
@@ -88,9 +89,9 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("Enter name of product: ");
+                    System.out.println("Enter name of product you want to find: ");
                     name = sc.nextLine();
-                    System.out.println("Enter price: ");
+                    System.out.println("Enter price below or equal to which you want to find: ");
                     price = sc.nextDouble();
                     sc.skip("\n");
 
@@ -101,7 +102,7 @@ public class Main {
                     }
 
                     System.out.printf("Products with name '%s' and price <= %.2f$\n", name, price);
-                    printTable(filteredProducts);
+                    printProducts(filteredProducts);
                     break;
                 case 5:
                     if (products.isEmpty()){
@@ -109,15 +110,15 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("Enter expiration: ");
+                    System.out.println("Enter expiration after which you want to find: ");
                     expiration = sc.nextLine();
 
                     filteredProducts = filterByExpirationAfter(expiration, products);
                     System.out.printf("Products with expiration after '%s'\n", expiration);
-                    printTable(filteredProducts);
+                    printProducts(filteredProducts);
                     break;
                 case 6:
-                    printTable(products);
+                    printProducts(products);
                     break;
             }
 
@@ -128,27 +129,20 @@ public class Main {
     }
 
     static void createTestProducts(List<Product> products) {
-        products.add(new Product(1, "Milk", "DairyFresh", 2.99, 200, "2024-09-30"));
-        products.add(new Product(2, "Bread", "Baker's Delight", 1.99, 150, "2024-09-25"));
-        products.add(new Product(3, "Eggs", "FarmBest", 3.50, 300, "2024-10-10"));
-        products.add(new Product(4, "Yogurt", "DairyFresh", 4.99, 100, "2024-10-05"));
-        products.add(new Product(5, "Cheese", "CheddarMelt", 5.99, 80, "2024-12-15"));
-        products.add(new Product(6, "Butter", "CreamySpread", 2.50, 120, "2025-01-10"));
-        products.add(new Product(7, "Orange Juice", "CitrusSplash", 3.99, 200, "2024-11-20"));
-        products.add(new Product(8, "Frozen Pizza", "QuickBake", 7.50, 90, "2025-06-30"));
-        products.add(new Product(9, "Chicken Breast", "PoultryPrime", 9.99, 50, "2024-09-22"));
-        products.add(new Product(10, "Ice Cream", "SweetTreats", 6.99, 100, "2024-09-22"));
+        products.add(new Product(currentID++, "Milk", "DairyFresh", 2.99, 200, "2024-09-30"));
+        products.add(new Product(currentID++, "Bread", "Baker's Delight", 1.99, 150, "2024-09-25"));
+        products.add(new Product(currentID++, "Eggs", "FarmBest", 3.50, 300, "2024-10-10"));
+        products.add(new Product(currentID++, "Yogurt", "DairyFresh", 4.99, 100, "2024-10-05"));
+        products.add(new Product(currentID++, "Cheese", "CheddarMelt", 5.99, 80, "2024-12-15"));
+        products.add(new Product(currentID++, "Butter", "CreamySpread", 2.50, 120, "2025-01-10"));
+        products.add(new Product(currentID++, "Orange Juice", "CitrusSplash", 3.99, 200, "2024-11-20"));
+        products.add(new Product(currentID++, "Frozen Pizza", "QuickBake", 7.50, 90, "2025-06-30"));
+        products.add(new Product(currentID++, "Chicken Breast", "PoultryPrime", 9.99, 50, "2024-09-22"));
+        products.add(new Product(currentID++, "Ice Cream", "SweetTreats", 6.99, 100, "2024-09-22"));
     }
 
     static Product createProduct(){
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("Enter id of product: ");
-        int id = sc.nextInt();
-        sc.skip("\n");
-        if (id == -1) {
-            return null;
-        }
 
         System.out.println("Enter product name: ");
         String name = sc.nextLine();
@@ -169,10 +163,20 @@ public class Main {
             return null;
         }
 
+        if (price < 0){
+            System.out.printf("%sPrice can't be negative%s\n", ANSI_RED, ANSI_RESET);
+            return null;
+        }
+
         System.out.println("Enter product quantity: ");
         int quantity = sc.nextInt();
         sc.skip("\n");
         if (quantity == -1){
+            return null;
+        }
+
+        if (quantity < 0){
+            System.out.printf("%sQuantity can't be negative%s\n", ANSI_RED, ANSI_RESET);
             return null;
         }
 
@@ -183,7 +187,7 @@ public class Main {
             return null;
         }
 
-        return new Product(id, name, manufacturer, price, quantity, expiration);
+        return new Product(currentID++, name, manufacturer, price, quantity, expiration);
     }
 
     static List<Product> filterByName(String name, List<Product> products){
@@ -225,7 +229,18 @@ public class Main {
     }
 
 
-    static void printTable(List<Product> products) {
+//    static void printProducts(List<Product> products){
+//        if (products.isEmpty()){
+//            System.out.printf("%sThere are no products%s\n", ANSI_RED, ANSI_RESET);
+//            return;
+//        }
+//
+//        for (Product product : products){
+//            System.out.println(product);
+//        }
+//    }
+
+    static void printProducts(List<Product> products) {
         String[] headers = {"ID", "Name", "Manufacturer", "Price", "Quantity", "Expiration"};
 
 
