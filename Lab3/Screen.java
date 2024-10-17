@@ -3,7 +3,6 @@ package Lab3;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,9 +17,7 @@ public class Screen {
     private List<Droid> topDroids;
     private List<Droid> bottomDroids;
 
-    public Screen(ReplaySystem replaySystem) {
-        this.replaySystem = replaySystem;
-
+    public Screen() {
         int[] dimensions = this.size();
         this.maxHeight = dimensions[0];
         this.maxWidth = dimensions[1];
@@ -67,6 +64,8 @@ public class Screen {
     public void setBottomDroids(List<Droid> droids){
         this.bottomDroids = droids;
     }
+
+    public void setReplaySystem(ReplaySystem replaySystem){ this.replaySystem = replaySystem; }
 
     public int[] size() {
         int[] dimensions = new int[2];
@@ -133,13 +132,9 @@ public class Screen {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        String fileName = dtf.format(now);
+        String fileName = "replays/" + dtf.format(now) + ".txt";
 
-        // Save droid names to a text file
-        replaySystem.saveDroidNamesToFile("replays/" + fileName + "_droids.txt", this.topDroids, this.bottomDroids);
-
-        // Save eventLog to a binary file
-        replaySystem.saveEventLogToFile("replays/" + fileName + "_events.ser", replaySystem.getEventLog());
+        replaySystem.saveLogsToFile(fileName);
 
         System.exit(0);
     }

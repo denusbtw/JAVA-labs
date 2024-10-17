@@ -4,12 +4,9 @@ import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 
 
 public class Main implements KeyListener {
@@ -38,18 +35,21 @@ public class Main implements KeyListener {
     private int selectedReplay = 0;
 
     public Main(){
+        screen = new Screen();
+        screen.clear();
+
         replaySystem = new ReplaySystem();
 
-        screen = new Screen(replaySystem);
-        screen.clear();
+        screen.setReplaySystem(replaySystem);
 
         menuChoices = initMenu();
         colorConverter = new ColorConverter();
         soundPlayer = new SoundPlayer();
 
+        availableDroids = initializeAllDroidsList();
+
         topDroids = new ArrayList<>();
         bottomDroids = new ArrayList<>();
-        availableDroids = initializeAllDroidsList();
 
         JFrame myJFrame = new JFrame();
         myJFrame.addKeyListener(this);
@@ -123,15 +123,16 @@ public class Main implements KeyListener {
         }
     }
 
-    public void switchReplaysChoice(boolean next){
+    public void switchReplaysChoice(boolean next) {
         selectedReplay = (selectedReplay + (next ? 1 : replaysFilesNames.size() - 1)) % replaysFilesNames.size();
 
         printReplaysChoices();
     }
 
-    public void selectReplaysChoice(){
-        replaySystem.loadDroidNamesFromFile("replays/" + replaysFilesNames.get(selectedReplay), availableDroids);
-        replaySystem.loadEventLogFromFile("replays/" + replaysFilesNames.get(selectedReplay));
+    public void selectReplaysChoice() {
+        String selectedReplayFile = replaysFilesNames.get(selectedReplay);
+
+        replaySystem.loadLogsFromFile("replays/" + selectedReplayFile);
 
         List<GameEvent> events = replaySystem.getEventLog();
 
@@ -143,16 +144,19 @@ public class Main implements KeyListener {
         replaySystem.replayEvents(events);
 
         replaySelecting = false;
+
+        screen.clear();
+        printMenuChoices();
     }
 
-    public void printReplaysChoices(){
+    public void printReplaysChoices() {
         screen.clear();
 
-        for (String replayFileName: replaysFilesNames) {
-            if (replaysFilesNames.indexOf(replayFileName) == selectedReplay) {
+        for (String fileName: replaysFilesNames) {
+            if (replaysFilesNames.indexOf(fileName) == selectedReplay) {
                 System.out.print("--> ");
             }
-            System.out.println(replayFileName);
+            System.out.println(fileName);
         }
     }
 
@@ -284,6 +288,8 @@ public class Main implements KeyListener {
 
             user1Selected = true;
 
+            replaySystem.logEvent("selectDroid", List.of("User: " + user, "Droid: " + topDroid.getName()));
+
             if (AIPlays){
                 Random rand = new Random();
 
@@ -294,6 +300,8 @@ public class Main implements KeyListener {
 
                 AITopDroid.setX(startX+20);
                 AITopDroid.setY(3);
+
+                replaySystem.logEvent("selectDroid", List.of("Computer " + user, "Droid: " + AITopDroid.getName()));
             }
 
         } else if (user == 2) {
@@ -302,6 +310,8 @@ public class Main implements KeyListener {
             bottomDroid.setY(startY);
 
             user2Selected = true;
+
+            replaySystem.logEvent("selectDroid", List.of("User " + user, "Droid: " + bottomDroid.getName()));
 
             if (AIPlays){
                 Random rand = new Random();
@@ -313,15 +323,15 @@ public class Main implements KeyListener {
 
                 AIBottomDroid.setX(startX+20);
                 AIBottomDroid.setY(startY);
+
+                replaySystem.logEvent("selectDroid", List.of("Computer " + user, "Droid: " + AIBottomDroid.getName()));
             }
 
-            // Start the game when both users have selected their droids
             startGame();
         }
     }
 
     private void startGame() {
-        // Add the player droids to the screen
         screen.addObject(topDroid);
         screen.addObject(bottomDroid);
 
@@ -331,7 +341,6 @@ public class Main implements KeyListener {
         DroidHud topHud = null;
         DroidHud bottomHud = null;
 
-        // If AI is playing, add the AI droids
         if (AIPlays) {
             screen.addObject(AITopDroid);
             screen.addObject(AIBottomDroid);
@@ -352,6 +361,8 @@ public class Main implements KeyListener {
         screen.addObject(topHud);
         screen.addObject(bottomHud);
 
+        replaySystem.logEvent("gameStart", List.of());
+
         screen.clear();
         screen.drawAllObjects();
     }
@@ -364,8 +375,6 @@ public class Main implements KeyListener {
         Weapon weapon3 = new Weapon("red", 30, 1.8);
         Weapon weapon4 = new Weapon("green", 20, 4.5);
         Weapon weapon5= new Weapon("yellow", 22, 3);
-
-        List<Droid> allDroids = new ArrayList<Droid>();
 
         Droid blazeBot = new Droid(
                 screen,

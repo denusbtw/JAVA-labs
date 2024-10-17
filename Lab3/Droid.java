@@ -12,8 +12,6 @@ public class Droid extends GameObject {
     private int speed;
     private String description;
     private SoundPlayer soundPlayer;
-    private List<Droid> topDroids;
-    private List<Droid> bottomDroids;
 
     public Droid (Screen screen, String symbol, String name, String color, Weapon weapon,
                   int health, int speed, String description, int x, int y, SoundPlayer soundPlayer) {
@@ -89,8 +87,7 @@ public class Droid extends GameObject {
     public void fire(String direction, List<Droid> enemyDroids, ReplaySystem replaySystem) {
         AtomicBoolean running = new AtomicBoolean(true);
 
-        List<String> eventData = List.of(this.getName(), String.valueOf(this.getX()), String.valueOf(this.getY()), direction);
-        replaySystem.logEvent("fire", eventData);
+        replaySystem.logEvent("fire", List.of(this.getName(), "x: " + this.getX(), "y: " + this.getY(), direction));
 
         soundPlayer.playSound("sounds/blaster.wav");
 
@@ -117,9 +114,7 @@ public class Droid extends GameObject {
                 Droid hitDroid = hasHitEnemy(enemyDroids, plasma);
 
                 if (hitDroid != null) {
-
-                    replaySystem.logEvent("hit", List.of(String.valueOf(hitDroid.getX()),
-                            String.valueOf(hitDroid.getY()), String.valueOf(hitDroid.getDamage())));
+                    replaySystem.logEvent("hit", List.of(hitDroid.getName(), "x: " + hitDroid.getX(), "y: " + hitDroid.getY(), "takenDamage: " + this.getDamage()));
 
                     soundPlayer.playSound("sounds/hit.wav");
                     int newHealth = hitDroid.getHealth() - this.getDamage();
@@ -127,9 +122,12 @@ public class Droid extends GameObject {
                     if (newHealth <= 0) {
                         if (enemyDroids.size() == 1){
 //                            TODO:
+                            replaySystem.logEvent("gameOver", List.of(hitDroid.getName()));
                             getScreen().endGame(hitDroid);
                         } else {
                             soundPlayer.playSound("sounds/explosion.wav");
+                            replaySystem.logEvent("droidDestroyed", List.of(hitDroid.getName()));
+
                             enemyDroids.remove(hitDroid);
                             getScreen().removeObject(hitDroid);
                         }
@@ -167,7 +165,7 @@ public class Droid extends GameObject {
     public void changeHealth(Droid droid, int newHealth, ReplaySystem replaySystem){
         droid.setHealth(newHealth);
 
-        replaySystem.logEvent("gameStateChange", List.of("health", droid.getName(), String.valueOf(newHealth)));
+        replaySystem.logEvent("healthChanged", List.of(this.getName(), "x: " + this.getX(), "y: " + this.getY(), "newHealth: " + newHealth));
     }
 
     public Droid hasHitEnemy(List<Droid> enemyDroids, GameObject plasma){
