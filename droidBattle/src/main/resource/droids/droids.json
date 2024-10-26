@@ -1,0 +1,41 @@
+{
+  "BlazeBot": {
+    "color": "red",
+    "damage": 25,
+    "fireRate": 2.4,
+    "health": 150,
+    "movementSpeed": 2,
+    "description": "BlazeBot is a fierce combatant equipped with a highly powerful yellow weapon. Its attacks are swift, delivering solid damage while maintaining a good pace."
+  },
+  "AquaDroid": {
+    "color": "blue",
+    "damage": 18,
+    "fireRate": 3.6,
+    "health": 120,
+    "movementSpeed": 1,
+    "description": "AquaDroid represents stability on the battlefield. With a purple weapon that balances damage and speed, it excels in tactical engagements."
+  },
+  "SmashTrooper": {
+    "color": "green",
+    "damage": 30,
+    "fireRate": 1.8,
+    "health": 180,
+    "movementSpeed": 2,
+    "description": "SmashTrooper is a heavy-hitting combat machine. Its red weapon delivers crushing blows with slow, devastating attacks."
+  },
+  "LaserScout": {
+    "color": "yellow",
+    "damage": 20,
+    "fireRate": 4.5,
+    "health": 110,
+    "movementSpeed": 3,
+    "description": "LaserScout is an agile fighter, using quick attacks to deal consistent damage while rapidly repositioning on the battlefield."
+  },
+  "VoltAssault": {
+    "color": "purple",
+    "damage": 22,
+    "fireRate": 3,
+    "health": 130,
+    "description": "VoltAssault is a versatile fighter with a balance between damage and speed, capable of holding its own in prolonged battles."
+  }
+}
