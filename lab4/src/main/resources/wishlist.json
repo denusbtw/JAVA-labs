@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Safari Adventure",
+    "type": "Adventure",
+    "transport": "Bus",
+    "mealOption": "Full Board",
+    "numberOfDays": 7,
+    "price": 1200,
+    "rating": 4.8
+  },
+  {
+    "name": "Relaxing Beach Holiday",
+    "type": "Leisure",
+    "transport": "Plane",
+    "mealOption": "All Inclusive",
+    "numberOfDays": 10,
+    "price": 1500,
+    "rating": 4.6
+  },
+  {
+    "name": "Safari Adventure",
+    "type": "Adventure",
+    "transport": "Bus",
+    "mealOption": "Full Board",
+    "numberOfDays": 7,
+    "price": 1200,
+    "rating": 4.8
+  }
+]

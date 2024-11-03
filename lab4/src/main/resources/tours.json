@@ -1,0 +1,182 @@
+[
+  {
+    "name": "Safari Adventure",
+    "type": "Adventure",
+    "transport": "Bus",
+    "mealOption": "Full Board",
+    "numberOfDays": 7,
+    "price": 1200,
+    "rating": 4.8
+  },
+  {
+    "name": "Historical Europe Tour",
+    "type": "Culture",
+    "transport": "Train",
+    "mealOption": "Half Board",
+    "numberOfDays": 14,
+    "price": 1800,
+    "rating": 4.9
+  },
+  {
+    "name": "Relaxing Beach Holiday",
+    "type": "Leisure",
+    "transport": "Plane",
+    "mealOption": "All Inclusive",
+    "numberOfDays": 10,
+    "price": 1500,
+    "rating": 4.6
+  },
+  {
+    "name": "Mountain Climbing Adventure",
+    "type": "Adventure",
+    "transport": "Bus",
+    "mealOption": "Breakfast Only",
+    "numberOfDays": 5,
+    "price": 900,
+    "rating": 4.7
+  },
+  {
+    "name": "Exotic Island Escape",
+    "type": "Leisure",
+    "transport": "Boat",
+    "mealOption": "Full Board",
+    "numberOfDays": 8,
+    "price": 2000,
+    "rating": 4.9
+  },
+  {
+    "name": "City Shopping Spree",
+    "type": "Shopping",
+    "transport": "Plane",
+    "mealOption": "Breakfast Only",
+    "numberOfDays": 3,
+    "price": 800,
+    "rating": 4.2
+  },
+  {
+    "name": "Northern Lights Expedition",
+    "type": "Adventure",
+    "transport": "Bus",
+    "mealOption": "Full Board",
+    "numberOfDays": 6,
+    "price": 1600,
+    "rating": 4.9
+  },
+  {
+    "name": "Wine and Culinary Tour",
+    "type": "Gastronomy",
+    "transport": "Train",
+    "mealOption": "All Inclusive",
+    "numberOfDays": 4,
+    "price": 1100,
+    "rating": 4.5
+  },
+  {
+    "name": "Mediterranean Cruise",
+    "type": "Cruise",
+    "transport": "Ship",
+    "mealOption": "Full Board",
+    "numberOfDays": 12,
+    "price": 3000,
+    "rating": 4.8
+  },
+  {
+    "name": "Desert Safari",
+    "type": "Adventure",
+    "transport": "4x4",
+    "mealOption": "Lunch Included",
+    "numberOfDays": 1,
+    "price": 500,
+    "rating": 4.4
+  },
+  {
+    "name": "Jungle Trekking",
+    "type": "Adventure",
+    "transport": "Bus",
+    "mealOption": "Full Board",
+    "numberOfDays": 7,
+    "price": 1300,
+    "rating": 4.6
+  },
+  {
+    "name": "Cultural Japan Tour",
+    "type": "Culture",
+    "transport": "Train",
+    "mealOption": "Half Board",
+    "numberOfDays": 14,
+    "price": 2500,
+    "rating": 4.9
+  },
+  {
+    "name": "Italian Art and History",
+    "type": "Culture",
+    "transport": "Plane",
+    "mealOption": "Breakfast Only",
+    "numberOfDays": 10,
+    "price": 1800,
+    "rating": 4.7
+  },
+  {
+    "name": "Alaskan Wilderness Expedition",
+    "type": "Adventure",
+    "transport": "Plane",
+    "mealOption": "Full Board",
+    "numberOfDays": 10,
+    "price": 3500,
+    "rating": 4.8
+  },
+  {
+    "name": "Paris City Break",
+    "type": "Leisure",
+    "transport": "Plane",
+    "mealOption": "Breakfast Only",
+    "numberOfDays": 4,
+    "price": 1200,
+    "rating": 4.6
+  },
+  {
+    "name": "Rainforest Retreat",
+    "type": "Nature",
+    "transport": "Bus",
+    "mealOption": "Full Board",
+    "numberOfDays": 7,
+    "price": 1400,
+    "rating": 4.7
+  },
+  {
+    "name": "Culinary Delights of Spain",
+    "type": "Gastronomy",
+    "transport": "Plane",
+    "mealOption": "All Inclusive",
+    "numberOfDays": 7,
+    "price": 2000,
+    "rating": 4.5
+  },
+  {
+    "name": "Island Hopping in Greece",
+    "type": "Leisure",
+    "transport": "Boat",
+    "mealOption": "Full Board",
+    "numberOfDays": 10,
+    "price": 2200,
+    "rating": 4.8
+  },
+  {
+    "name": "Scandinavian Wonders",
+    "type": "Culture",
+    "transport": "Train",
+    "mealOption": "Half Board",
+    "numberOfDays": 15,
+    "price": 2700,
+    "rating": 4.9
+  },
+  {
+    "name": "African Safari",
+    "type": "Adventure",
+    "transport": "4x4",
+    "mealOption": "Full Board",
+    "numberOfDays": 8,
+    "price": 2300,
+    "rating": 4.9
+  }
+]
